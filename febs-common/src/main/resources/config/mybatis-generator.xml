@@ -19,9 +19,9 @@
         <!-- 数据库链接地址账号密码 -->
         <jdbcConnection 
         	driverClass="com.mysql.jdbc.Driver" 
-        	connectionURL="jdbc:mysql://127.0.0.1:3306/febs_security"
+        	connectionURL="jdbc:mysql://120.77.216.182:3306/febs"
         	userId="root" 
-        	password="123456">
+        	password="jbsAbc123456">
         </jdbcConnection>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
