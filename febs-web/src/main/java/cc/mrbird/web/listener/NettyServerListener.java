@@ -1,6 +1,7 @@
 package cc.mrbird.web.listener;
 
 
+import cc.mrbird.common.NettyConstant;
 import cc.mrbird.web.handler.ServerChannelHandlerAdapter;
 import com.fasterxml.jackson.core.ObjectCodec;
 import io.netty.bootstrap.ServerBootstrap;
@@ -84,7 +85,7 @@ public class NettyServerListener {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
                     ChannelPipeline pipeline = ch.pipeline();
-                    pipeline.addLast(new LengthFieldBasedFrameDecoder(100
+                    pipeline.addLast(new LengthFieldBasedFrameDecoder(NettyConstant.getMaxFrameLength()
                             , 0, 2, 0, 2));
                     pipeline.addLast(new LengthFieldPrepender(2));
 //                    pipeline.addLast(new ObjectCodec());
