@@ -41,11 +41,11 @@
         </filter>
     </appender>
 
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="console" />
     </root>
 
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="file_info" />
         <appender-ref ref="file_error" />
     </root>

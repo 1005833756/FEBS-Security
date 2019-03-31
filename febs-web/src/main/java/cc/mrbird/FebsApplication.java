@@ -4,6 +4,7 @@ import cc.mrbird.common.properties.FebsProperies;
 import cc.mrbird.security.properties.FebsSecurityProperties;
 import cc.mrbird.web.config.NettyConfig;
 import cc.mrbird.web.listener.NettyServerListener;
+import org.apache.catalina.security.SecurityUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class FebsApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        System.out.println(SecurityUtil.isPackageProtectionEnabled());
         nettyServerListener.start();
     }
 }
