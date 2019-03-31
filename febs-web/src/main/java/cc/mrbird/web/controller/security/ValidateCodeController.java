@@ -42,12 +42,14 @@ public class ValidateCodeController {
     public void createCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         logger.info("获取图片开始");
         ImageCode imageCode = (ImageCode) imageCodeGenerator.createCode();
-
         BufferedImage image = imageCode.getImage();
+        logger.info("imageCode.getImage()");
         imageCode.setImage(null);
         sessionStrategy.setAttribute(new ServletWebRequest(request), FebsConstant.SESSION_KEY_IMAGE_CODE, imageCode);
+        logger.info("ServletWebRequest");
         response.setContentType("image/jpeg");
         ImageIO.write(image, "jpeg", response.getOutputStream());
+        logger.info("write");
         logger.info("获取图片结束");
     }
 
