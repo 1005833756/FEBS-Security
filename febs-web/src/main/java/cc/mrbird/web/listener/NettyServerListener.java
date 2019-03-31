@@ -2,6 +2,7 @@ package cc.mrbird.web.listener;
 
 
 import cc.mrbird.common.NettyConstant;
+import cc.mrbird.web.config.NettyConfig;
 import cc.mrbird.web.handler.ServerChannelHandlerAdapter;
 import com.fasterxml.jackson.core.ObjectCodec;
 import io.netty.bootstrap.ServerBootstrap;
@@ -53,11 +54,11 @@ public class NettyServerListener {
      */
     @Resource
     private ServerChannelHandlerAdapter channelHandlerAdapter;
-//    /**
-//     * NETT服务器配置类
-//     */
-//    @Resource
-//    private NettyConfig nettyConfig;
+    /**
+     * NETT服务器配置类
+     */
+    @Resource
+    private NettyConfig nettyConfig;
 
     /**
      * 关闭服务器方法
@@ -73,14 +74,13 @@ public class NettyServerListener {
     /**
      * 开启及服务线程
      */
-    @PostConstruct
+
     public void start() {
         // 从配置文件中(application.yml)获取服务端监听端口号
-        int port = 25000;
+        int port = nettyConfig.getPort();
         serverBootstrap.group(boss, work)
                 .channel(NioServerSocketChannel.class)
-                .option(ChannelOption.SO_BACKLOG, 100)
-                .childOption(ChannelOption.SO_KEEPALIVE, true);
+                .option(ChannelOption.SO_BACKLOG, 100);
         try {
             //设置事件处理
             serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
