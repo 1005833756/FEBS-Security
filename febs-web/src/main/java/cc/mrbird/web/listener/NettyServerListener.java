@@ -78,7 +78,8 @@ public class NettyServerListener {
         serverBootstrap.group(boss, work)
                 .channel(NioServerSocketChannel.class)
                 .option(ChannelOption.SO_BACKLOG, 100)
-                .handler(new LoggingHandler(LogLevel.INFO));
+                .childOption(ChannelOption.SO_KEEPALIVE, true)
+                .handler(new ServerChannelHandlerAdapter());
         try {
             //设置事件处理
             serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
@@ -88,9 +89,9 @@ public class NettyServerListener {
                     pipeline.addLast(new LengthFieldBasedFrameDecoder(NettyConstant.getMaxFrameLength()
                             , 0, 2, 0, 2));
                     pipeline.addLast(new LengthFieldPrepender(2));
-//                    pipeline.addLast(new ObjectCodec());
+                 // pipeline.addLast(new ObjectCodec());
 
-                    pipeline.addLast(channelHandlerAdapter);
+                  //  pipeline.addLast(channelHandlerAdapter);
                 }
             });
             LOGGER.info("netty服务器在[{}]端口启动监听", port);
