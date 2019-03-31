@@ -6,6 +6,7 @@ import cc.mrbird.web.netty.RequestDispatcher;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -36,13 +37,11 @@ public class ServerChannelHandlerAdapter extends ChannelHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        MethodInvokeMeta invokeMeta = (MethodInvokeMeta) msg;
+
         logger.info("收到请求:"+msg.toString());
         // 屏蔽toString()方法
-        if (invokeMeta.getMethodName().endsWith("toString()")
-                && !"class java.lang.String".equals(invokeMeta.getReturnType().toString()))
-            logger.info("客户端传入参数 :{},返回值：{}",
-                    invokeMeta.getArgs(), invokeMeta.getReturnType());
-        dispatcher.dispatcher(ctx, invokeMeta);
+
+        dispatcher.dispatcher(ctx, (String) msg);
     }
+
 }

@@ -25,23 +25,17 @@ public class RequestDispatcher implements ApplicationContextAware {
      * 发送
      *
      * @param ctx
-     * @param invokeMeta
+     * @param msg
      */
-    public void dispatcher(final ChannelHandlerContext ctx, final MethodInvokeMeta invokeMeta) {
+    public void dispatcher(final ChannelHandlerContext ctx, final String msg) {
         executorService.submit(() -> {
             ChannelFuture f = null;
             try {
-                Class<?> interfaceClass = invokeMeta.getInterfaceClass();
-                String name = invokeMeta.getMethodName();
-                Object[] args = invokeMeta.getArgs();
-                Class<?>[] parameterTypes = invokeMeta.getParameterTypes();
-                Object targetObject = app.getBean(interfaceClass);
-                Method method = targetObject.getClass().getMethod(name, parameterTypes);
-                Object obj = method.invoke(targetObject, args);
-                if (obj == null) {
+
+                if (msg == null) {
                     f = ctx.writeAndFlush(ObjectUtils.NULL);
                 } else {
-                    f = ctx.writeAndFlush(obj);
+                    f = ctx.writeAndFlush(msg);
                 }
                 f.addListener(ChannelFutureListener.CLOSE);
             } catch (Exception e) {

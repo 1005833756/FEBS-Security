@@ -11,6 +11,8 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
@@ -78,20 +80,18 @@ public class NettyServerListener {
         serverBootstrap.group(boss, work)
                 .channel(NioServerSocketChannel.class)
                 .option(ChannelOption.SO_BACKLOG, 100)
-                .childOption(ChannelOption.SO_KEEPALIVE, true)
-                .handler(new ServerChannelHandlerAdapter());
+                .childOption(ChannelOption.SO_KEEPALIVE, true);
         try {
             //设置事件处理
             serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
                     ChannelPipeline pipeline = ch.pipeline();
-                    pipeline.addLast(new LengthFieldBasedFrameDecoder(NettyConstant.getMaxFrameLength()
-                            , 0, 2, 0, 2));
-                    pipeline.addLast(new LengthFieldPrepender(2));
-                 // pipeline.addLast(new ObjectCodec());
 
-                  //  pipeline.addLast(channelHandlerAdapter);
+                    ch.pipeline().addLast("decoder", new StringDecoder());
+                    ch.pipeline().addLast("encoder", new StringEncoder());
+
+                   pipeline.addLast(channelHandlerAdapter);
                 }
             });
             LOGGER.info("netty服务器在[{}]端口启动监听", port);
