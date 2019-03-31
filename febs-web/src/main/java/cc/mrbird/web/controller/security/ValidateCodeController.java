@@ -42,12 +42,13 @@ public class ValidateCodeController {
     public void createCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         logger.info("获取图片开始");
         ImageCode imageCode = (ImageCode) imageCodeGenerator.createCode();
-        logger.info("获取图片结束");
+
         BufferedImage image = imageCode.getImage();
         imageCode.setImage(null);
         sessionStrategy.setAttribute(new ServletWebRequest(request), FebsConstant.SESSION_KEY_IMAGE_CODE, imageCode);
         response.setContentType("image/jpeg");
         ImageIO.write(image, "jpeg", response.getOutputStream());
+        logger.info("获取图片结束");
     }
 
     @Limit(key = "smscode", period = 60, count = 5, name = "短信验证码", prefix = "limit")
