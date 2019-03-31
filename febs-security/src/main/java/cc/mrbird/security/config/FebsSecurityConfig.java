@@ -137,7 +137,8 @@ public class FebsSecurityConfig extends WebSecurityConfigurerAdapter {
                         febsSecurityProperties.getCode().getSms().getCreateUrl(), // 创建短信验证码路径
                         febsSecurityProperties.getSocial().getSocialRedirectUrl(), // 重定向到社交账号注册（绑定）页面路径
                         febsSecurityProperties.getSocial().getSocialBindUrl(), // 社交账号绑定 URL
-                        febsSecurityProperties.getSocial().getSocialRegistUrl() // 注册并绑定社交账号 URL
+                        febsSecurityProperties.getSocial().getSocialRegistUrl(), // 注册并绑定社交账号 URL,
+                        "/test/**"
                 ).permitAll() // 配置免认证路径
                 .anyRequest()  // 所有请求
                 .authenticated() // 都需要认证
