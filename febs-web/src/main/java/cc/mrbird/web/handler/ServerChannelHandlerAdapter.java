@@ -37,6 +37,7 @@ public class ServerChannelHandlerAdapter extends ChannelHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         MethodInvokeMeta invokeMeta = (MethodInvokeMeta) msg;
+        logger.info("收到请求:"+msg.toString());
         // 屏蔽toString()方法
         if (invokeMeta.getMethodName().endsWith("toString()")
                 && !"class java.lang.String".equals(invokeMeta.getReturnType().toString()))
