@@ -2,8 +2,10 @@ package cc.mrbird;
 
 import cc.mrbird.common.properties.FebsProperies;
 import cc.mrbird.security.properties.FebsSecurityProperties;
+import cc.mrbird.web.listener.NettyServerListener;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -21,10 +23,15 @@ import java.time.LocalTime;
 @EnableCaching
 @EnableAsync
 @EnableTransactionManagement
-public class FebsApplication {
+public class FebsApplication implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(FebsApplication.class, args);
         LoggerFactory.getLogger(FebsApplication.class).info(
                 "《《《《《《 FEBS started up successfully at {} {} 》》》》》》", LocalDate.now(), LocalTime.now());
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+
     }
 }
