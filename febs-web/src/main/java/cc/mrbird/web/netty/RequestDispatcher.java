@@ -35,12 +35,9 @@ public class RequestDispatcher implements ApplicationContextAware {
                 } else {
                     f = ctx.writeAndFlush(msg);
                 }
-                f.addListener(ChannelFutureListener.CLOSE);
             } catch (Exception e) {
 
                 f = ctx.writeAndFlush("");
-            } finally {
-                f.addListener(ChannelFutureListener.CLOSE);
             }
         });
     }
