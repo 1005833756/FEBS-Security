@@ -1,8 +1,7 @@
 package cc.mrbird.web.netty;
 
 
-import cc.mrbird.common.NettyConstant;
-import cc.mrbird.common.domain.MethodInvokeMeta;
+import cc.mrbird.common.constant.NettyConstant;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,7 +11,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Method;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

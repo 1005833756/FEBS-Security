@@ -1,26 +1,19 @@
 package cc.mrbird.web.listener;
 
 
-import cc.mrbird.common.NettyConstant;
 import cc.mrbird.web.config.NettyConfig;
 import cc.mrbird.web.handler.ServerChannelHandlerAdapter;
-import com.fasterxml.jackson.core.ObjectCodec;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
-import io.netty.handler.logging.LogLevel;
-import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 
@@ -80,7 +73,9 @@ public class NettyServerListener {
         int port = nettyConfig.getPort();
         serverBootstrap.group(boss, work)
                 .channel(NioServerSocketChannel.class)
-                .option(ChannelOption.SO_BACKLOG, 100);
+                .option(ChannelOption.SO_BACKLOG, 1024)
+                .childOption(ChannelOption.SO_KEEPALIVE, true)
+                .childOption(ChannelOption.TCP_NODELAY, true);
         try {
             //设置事件处理
             serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {

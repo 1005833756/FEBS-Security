@@ -1,4 +1,4 @@
-package cc.mrbird.common;
+package cc.mrbird.common.constant;
 
 public class NettyConstant {
     /**
